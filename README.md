@@ -25,7 +25,10 @@ The conatiner comes with a postgres db, which makes it ARM compatible! To connec
 ```
 
 # Further configuration
-In the docker-compose.yml file you should replace "yourapp" with your actual app name and also edit the vhost configuration to correct server name and ths admin contact formular. 
+In the docker-compose.yml file you should replace "yourapp" with your actual app name and also edit the vhost configuration to correct server name and ths admin contact formular.
+
+# Links
+1. [The absolutely GREATEST guide for deploying laravel](https://devmarketer.io/learn/deploy-laravel-5-app-lemp-stack-ubuntu-nginx/)
 
 # Issues
 If you encounter an issue or parts of this tutorial are outdated please don't hesitate to contact me.
