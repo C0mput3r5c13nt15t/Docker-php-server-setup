@@ -1,0 +1,41 @@
+---
+# Docker Web Development Stack (dstack) 1.0.3
+#
+# Runs Apache, Postgres, PHP and Redis
+# SSL is preconfigured.
+# Imagemagick and XDebug are activated.
+#
+# Run with 
+# docker-compose up -d
+#
+# (C)2021 Paul Maier
+#
+version: "3"
+services:
+  # --- Postgres
+  #
+  postgres:
+    container_name: "inpriparo-postgres"
+    image: 'postgres'
+    environment:
+      - POSTGRES_USER=Inpriparo
+      - POSTGRES_PASSWORD=InpriparoPassword01
+      - POSTGRES_DB=Inpriparo
+    ports:
+      - '3306:3306'
+    volumes:
+      - ./docker/postgres/data:/bitnami/postgres/data
+  # --- PHP 7.2
+  #
+  php-apache:
+    container_name: "inpriparo-php-apache"
+    image: php:7.2-apache
+    ports:
+      - '80:8080'
+      - '443:8443'
+    volumes:
+      - ./docker/src:/var/www/html:delegated
+      - ./docker/php-apache/vhosts.conf:/etc/apache2/sites-enabled/000-default.conf
+volumes:
+  inpriparo-postgres:
+    driver: local
