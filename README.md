@@ -30,7 +30,7 @@ In the docker-compose.yml file you should replace "yourapp" with your actual app
 # Deploy a Laravel project
 To deploy a laravel you will first need to complete the steps above and then continue with this section.
 
-1. Append the following to the docker-compose.yml file and then run ```docker-compose up -d --build```
+1. Append the following to the docker-compose.yml file, create a .env file in the app-apache-ssl-image folder (for details see [the ultimate laravel guide](https://devmarketer.io/learn/deploy-laravel-5-app-lemp-stack-ubuntu-nginx/)) and then run ```docker-compose up -d --build```
 ```Dockerfile
 ...
 
@@ -46,7 +46,13 @@ RUN git clone https://github.com/yourusername/yourrepo.git .
 
 # Install Laravel and configure permissions
 RUN composer install --no-dev
-RUN chown -R :www-data /var/www/html && chmod -R 775 /var/www/html/storage
+RUN chown -R :www-data /var/www/html && chmod -R 775 /var/www/html/storage && chmod -R 775 /var/www/laravel/bootstrap/cache
+
+# Create and write .env
+COPY .env /var/www/html/.env
+
+# Generate app key
+RUN php artisan key:generate
 ```
 
 # Links
