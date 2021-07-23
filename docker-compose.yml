@@ -3,10 +3,9 @@
 #
 # Runs Apache, Postgres, PHP and Redis
 # SSL is preconfigured.
-# Imagemagick and XDebug are activated.
 #
 # Run with 
-# docker-compose up -d
+# docker-compose up -d --build
 #
 # (C)2021 Paul Maier
 #
@@ -15,12 +14,12 @@ services:
   # --- Postgres
   #
   postgres:
-    container_name: "inpriparo-postgres"
+    container_name: "yourapp-postgres"
     image: 'postgres'
     environment:
-      - POSTGRES_USER=Inpriparo
-      - POSTGRES_PASSWORD=InpriparoPassword01
-      - POSTGRES_DB=Inpriparo
+      - POSTGRES_USER=YOUR_DB_USER
+      - POSTGRES_PASSWORD=YOUR_DB_PASSWORD
+      - POSTGRES_DB=YOUR_DEFAULT_DB
     ports:
       - '3306:3306'
     volumes:
@@ -28,8 +27,10 @@ services:
   # --- PHP 7.2
   #
   php-apache:
-    container_name: "inpriparo-php-apache"
-    image: php:7.2-apache
+    container_name: "yourapp-php-apache"
+    build:
+      context: ./php-apache-ssl-image
+      dockerfile: Dockerfile
     ports:
       - '80:8080'
       - '443:8443'
@@ -37,5 +38,5 @@ services:
       - ./docker/src:/var/www/html:delegated
       - ./docker/php-apache/vhosts.conf:/etc/apache2/sites-enabled/000-default.conf
 volumes:
-  inpriparo-postgres:
+  yourapp-postgres:
     driver: local
