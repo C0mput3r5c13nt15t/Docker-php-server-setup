@@ -48,7 +48,7 @@ RUN git clone https://github.com/yourusername/yourrepo.git .
 RUN composer install --no-dev
 RUN chown -R :www-data /var/www/html && chmod -R 775 /var/www/html/storage && chmod -R 775 /var/www/laravel/bootstrap/cache
 
-# Create and write .env
+# Copy the .env
 COPY .env /var/www/html/.env
 
 # Generate app key
