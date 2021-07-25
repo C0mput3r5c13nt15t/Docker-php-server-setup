@@ -2,7 +2,7 @@
 This is the template for an docker php apache server. It's purpose is to help you deploy your php application faster and more easily.
 
 # How to use
-To use this repository you first need to [install docker-compose](https://docs.docker.com/compose/install/).
+To use this repository you first need to [install docker-compose](https://docs.docker.com/compose/install/) (Watch out! It's different [for raspberry pi](https://dev.to/rohansawant/installing-docker-and-docker-compose-on-the-raspberry-pi-in-5-simple-steps-3mgl)).
 
 1. Make a folder in your home directory and clone this repository into it
 2. Put your php application into the src file
