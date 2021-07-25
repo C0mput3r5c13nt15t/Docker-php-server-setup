@@ -95,7 +95,7 @@ Listen 8443
   </Directory>
 </VirtualHost>
 ```
-5. run ```docker-compose up -d --build```
+5. Now run ```docker-compose up -d --build```
 
 # Links
 1. [The absolutely GREATEST guide for deploying laravel](https://devmarketer.io/learn/deploy-laravel-5-app-lemp-stack-ubuntu-nginx/)
