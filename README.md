@@ -30,7 +30,7 @@ In the docker-compose.yml file you should replace "yourapp" with your actual app
 # Deploy a Laravel project
 To deploy a laravel you will first need to complete the steps above and then continue with this section.
 
-1. Append the following to the docker-compose.yml file, create a .env file in the app-apache-ssl-image folder (for details see [the ultimate laravel guide](https://devmarketer.io/learn/deploy-laravel-5-app-lemp-stack-ubuntu-nginx/)) and then run ```docker-compose up -d --build```
+1. Append the following to the docker-compose.yml file
 ```Dockerfile
 ...
 
@@ -54,6 +54,48 @@ COPY .env /var/www/html/.env
 # Generate app key
 RUN php artisan key:generate
 ```
+2. Create an .env file in the app-apache-ssl-image folder (for details on what to put in there see [the ultimate laravel guide](https://devmarketer.io/learn/deploy-laravel-5-app-lemp-stack-ubuntu-nginx/))
+3. Change you vhost.conf file in docker/php-apache to look something like this
+```conf
+Listen 8080
+Listen 8443
+
+<VirtualHost *:8080>
+  ServerName mysite.example.com
+  ServerAdmin webmaster@localhost
+
+  DocumentRoot "/var/www/html/public/"
+  <Directory "/var/www/html/public/">
+    Options Indexes FollowSymLinks
+    AllowOverride All
+    allow from all
+    Require all granted
+    DirectoryIndex index.php index.html
+  </Directory>
+
+  # DocumentRoot /var/www/html/public/
+  # Redirect / https://mysite.example.com/
+</VirtualHost>
+
+<VirtualHost *:8443>
+  ServerName mysite.example.com
+  ServerAdmin webmaster@localhost
+
+  SSLEngine on
+  SSLCertificateFile /etc/ssl/certs/ssl-cert-snakeoil.pem
+  SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
+
+  DocumentRoot "/var/www/html/public/"
+  <Directory "/var/www/html/public/">
+    Options Indexes FollowSymLinks
+    AllowOverride All
+    allow from all
+    Require all granted
+    DirectoryIndex index.php index.html
+  </Directory>
+</VirtualHost>
+```
+5. run ```docker-compose up -d --build```
 
 # Links
 1. [The absolutely GREATEST guide for deploying laravel](https://devmarketer.io/learn/deploy-laravel-5-app-lemp-stack-ubuntu-nginx/)
